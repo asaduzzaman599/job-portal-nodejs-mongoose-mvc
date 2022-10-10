@@ -8,12 +8,17 @@ app.use(cors());
 
 
 //routes
+const managerRoute = require('./routes/manager.route')
+const jobRoute = require('./routes/job.route')
 
 
 app.get("/", (req, res) => {
   res.send("Route is working! YaY!");
 });
 
+
+app.use("/manager",managerRoute)
+app.use("/jobs",jobRoute)
 
 
 
