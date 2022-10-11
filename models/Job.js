@@ -8,11 +8,11 @@ const jobSchema = mongoose.Schema({
         name: {
           type: String,
           trim: true,
-          required: true,
+          // required: true,
         },
         id: {
           type: ObjectId,
-          required: true,
+          // required: true,
           ref:"Manager"
         }
       },
