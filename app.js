@@ -18,7 +18,7 @@ app.get("/", (req, res) => {
 });
 
 
-app.use("/manager/jobs",managerRoute)
+app.use("/manager",managerRoute)
 app.use("/jobs",jobRoute)
 app.use("/candidates",candidateRoute)
 
