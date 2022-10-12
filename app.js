@@ -11,6 +11,7 @@ app.use(cors());
 const managerRoute = require('./routes/manager.route')
 const jobRoute = require('./routes/job.route')
 const candidateRoute = require('./routes/candidate.route')
+const userRoute = require('./routes/user.route')
 
 
 app.get("/", (req, res) => {
@@ -21,6 +22,7 @@ app.get("/", (req, res) => {
 app.use("/manager",managerRoute)
 app.use("/jobs",jobRoute)
 app.use("/candidates",candidateRoute)
+app.use("/user",userRoute)
 
 
 
