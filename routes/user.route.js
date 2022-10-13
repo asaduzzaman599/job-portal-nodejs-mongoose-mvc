@@ -1,24 +1,13 @@
 const express = require('express');
+const userController = require("../controllers/user.controller");
+const { verifyToken } = require('../middleware/verifyToken');
 
 const router = express.Router()
 
-router.route('/signup').post((req,res)=>{
-    res.send({signup:true})
-})
-router.route('/login').post((req,res)=>{
-    res.send({login:true})
-})
+router.route('/signup').post(userController.signupUser)
 
-router.route('/me').get((req,res)=>{
-    res.send({me:true})
-})
+router.route('/login').post(userController.loginUser)
+
+router.get("/me", verifyToken, userController.getAuth);
 
 module.exports = router
-
-/* 
-router.route('/').get(jobController.findAllJob).post(jobController.createJob)
-
-router.route('/:id').get(jobController.findOneJob).patch(jobController.updateJob)
-
-module.exports = router
-*/
