@@ -13,7 +13,7 @@ const jobSchema = mongoose.Schema({
         id: {
           type: ObjectId,
           // required: true,
-          ref:"Manager"
+          ref:"User"
         }
       },
   name: {
@@ -25,24 +25,42 @@ const jobSchema = mongoose.Schema({
     lowercase: true,
   },
   description: String,
-  remuneration: {
+  jobType:{
+    enum:['Full Time', 'Part Time'],
+    default:'Full Time',
+    type:String
+  },
+  salary: {
     type: Number,
     required: true,
     min: [0, "Remuneration can't be negative"]
   },
   totalApplied: {
     type: Number,
-    required: true,
     min: [0, "Total applied job can't be negative"]
   },
  
-  candidates: [{
-    name: String,
-    contanctNumber: String,
-    id: {
+  appliedInfo: [{
+    candidateId:  {
       type: ObjectId,
       ref: "Candidate"
+    },
+    id: {
+      type: ObjectId,
+      ref: "AppliedInfo"
     }
+  }],
+  deadline:{
+    type:Date,
+    required:true
+  },
+  candidates: [{
+    // name: String,
+    // contanctNumber: String,
+    
+      type: ObjectId,
+      ref: "Candidate"
+    
   }],
   status: {
     type: String,

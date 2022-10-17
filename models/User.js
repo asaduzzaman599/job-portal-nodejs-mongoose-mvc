@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const validator = require("validator");
+const { ObjectId } = mongoose.Schema.Types;
 // const crypto = require("crypto");
 
 const bcrypt = require("bcryptjs");
@@ -73,6 +74,14 @@ const userSchema = mongoose.Schema(
       default: "inactive",
       enum: ["active", "inactive", "blocked"],
     },
+    jobs: [{
+      name: String,
+      contanctNumber: String,
+      id: {
+        type: ObjectId,
+        ref: "Job"
+      }
+    }],
   },
   {
     timestamps: true,

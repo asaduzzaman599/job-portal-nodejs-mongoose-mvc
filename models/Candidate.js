@@ -12,18 +12,24 @@ const candidateSchema = mongoose.Schema({
     unique: true,
     lowercase: true,
   },
-  resumeUrl: [{
-    type: String,
-    // required: true,
-    validate: [valid.isURL, "wrong url"]
-  }],
-  jobs: [{
-    name: String,
-    contanctNumber: String,
+  user:{
     id: {
       type: ObjectId,
-      ref: "Job"
+      ref: "User"
     }
+  },
+  appliedInfo: [{
+    
+      type: ObjectId,
+      ref: "AppliedInfo"
+  }]
+  ,
+  
+  jobs: [{
+    
+      type: ObjectId,
+      ref: "Job"
+    
   }],
   status: {
     type: String,

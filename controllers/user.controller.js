@@ -1,10 +1,20 @@
+const { createCandidatetService } = require("../services/candidate.service");
 const userService  = require("../services/user.service");
 const { generateToken } = require("../utils/token");
   
 exports.signupUser = async (req, res, next) => {
     try {
         const result = await userService.createUserService(req.body);
-    
+      
+      if(req.body.role === "candidate"){
+        const user = req.body
+        await createCandidatetService({
+          name: `${user.firstName} ${user.lastName}` ,
+          user:{
+            id: result._id
+          }
+        })
+      }
         res.status(200).json({
           status: "success",
           message: "Successfully sign up user",
@@ -59,7 +69,7 @@ exports.loginUser = async (req, res, next) => {
         console.log(error)
         res.status(400).json({
           status: "fail",
-          error: "Couldn't user login user"
+          error: "Couldn't login user"
         })
       }
 }

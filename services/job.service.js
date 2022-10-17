@@ -1,18 +1,46 @@
 const Job = require("../models/Job");
+const AppliedInfo = require("../models/AppliedInfo");
+const Candidate = require("../models/Candidate");
 
 exports.createJobService = async (data) => {
     const result = await Job.create(data);
     return result;
   }
+
+exports.appliedJobInfoService = async (data) => {
+    const result = await AppliedInfo.create({...data});
+
+    console.log(data)
+    const {_id:appliedInfoId,job,candidate}= result;
   
-exports.findAllJobService = async () => {
-    const result = await Job.find();
+    console.log('job can',job,candidate)
+  
+     const jobdata = await Job.updateOne(
+      {_id:job},
+      {$push : {appliedInfo: {id:appliedInfoId, candidateId:candidate},
+      candidates:candidate}}
+      )
+      console.log('job data',jobdata)
+     const candidatedata = await Candidate.updateOne(
+      {_id:candidate.toString()},
+      {$inc:{totalApplied:1}},
+      {$push : {appliedInfo: appliedInfoId,
+      jobs:job}}
+      )
+      
+      console.log('candidate data',candidatedata)
+    return result;
+  }
+  
+exports.findAllJobService = async (query) => {
+    const result = await Job.find({...query?.data}).limit(query?.limit);
     return result;
   }
 
   
-exports.findOneJobService = async (_id) => {
-    const result = await Job.findOne({ _id })
+exports.findOneJobService = async (query) => {
+  console.log("data",query?.data)
+    const result = await Job.find({ ...query?.data }).populate('candidates')
     return result;
   }
   
@@ -20,5 +48,12 @@ exports.findOneJobService = async (_id) => {
     const result = await Job.updateOne({ _id }, data, {
       runValidators: true
     });
+    return result;
+  }
+
+  
+  
+exports.findOneAppliedJobInfoService = async (query) => {
+    const result = await AppliedInfo.findOne({ ...query?.data })
     return result;
   }

@@ -12,10 +12,12 @@ const storage = multer.diskStorage({
 
 const uploader = multer({
   storage,
-  fileFilter: (req, file, cb) => {
+  fileFilter:async (req, file, cb) => {
     const supportedImage = /pdf/;
-    const extension = path.extname(file.originalname);
-
+    const extension = await path.extname(file.originalname);
+    if(file.originalname){
+      req.body.resumeId = file?.originalname
+    }
     if(supportedImage.test(extension)){
       cb(null, true);
     } else{

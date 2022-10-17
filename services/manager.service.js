@@ -1,4 +1,5 @@
 const Manager = require("../models/Manager");
+const User = require("../models/User");
 
 exports.createManagertService = async (data) => {
     const manager = await Manager.create(data);
@@ -7,16 +8,16 @@ exports.createManagertService = async (data) => {
     return manager;
   };
 
-  exports.findOneManagerService = async (_id) => {
-    const manager = await Manager.findOne({_id});
+  exports.findOneManagerService = async (query) => {
+    const manager = await User.find({role:'manager', ...query?.data});
    
 
     return manager;
   };
 
   
-  exports.findAllManagerService = async (_id) => {
-    const manager = await Manager.find();
+  exports.findAllManagerService = async (query) => {
+    const manager = await User.find({role:'manager',...query?.data});
    
 
     return manager;

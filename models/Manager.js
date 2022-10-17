@@ -6,7 +6,7 @@ const managerSchema = mongoose.Schema({
 
   jobs: [{
     type: ObjectId,
-    ref: "Product"
+    ref: "Job"
   }],
   name: {
     type: String,
