@@ -18,22 +18,23 @@ exports.appliedJobInfoService = async (data) => {
      const jobdata = await Job.updateOne(
       {_id:job},
       {$push : {appliedInfo: {id:appliedInfoId, candidateId:candidate},
-      candidates:candidate}}
+      candidates:candidate},
+      $inc:{totalApplied:1}}
       )
+      
       console.log('job data',jobdata)
-     const candidatedata = await Candidate.updateOne(
-      {_id:candidate.toString()},
-      {$inc:{totalApplied:1}},
+     const candidateData = await Candidate.updateOne(
+      {_id:candidate},
       {$push : {appliedInfo: appliedInfoId,
       jobs:job}}
       )
       
-      console.log('candidate data',candidatedata)
+      console.log('candidate data',candidateData)
     return result;
   }
   
 exports.findAllJobService = async (query) => {
-    const result = await Job.find({...query?.data}).limit(query?.limit);
+    const result = await Job.find({...query?.data}).sort(query?.sort).limit(query?.limit);
     return result;
   }
 

@@ -137,3 +137,47 @@ exports.applyJob = async (req, res, next) => {
       })
     }
   }
+
+  
+exports.highestPaidJobs = async (req, res, next) => {
+  try{
+    const user = req.user
+
+      const query = {}
+      query.sort = {'salary':-1}
+      query.limit=10;
+      const result = await JobService.findAllJobService(query)
+      return res.status(200).json({
+          status: "success",
+          result: result
+        })
+
+  } catch (error) {
+    console.log(error)
+    res.status(400).json({
+      status: "fail",
+      error: "Couldn't find all job"
+    })
+  }
+}
+exports.highestAppliedJobs = async (req, res, next) => {
+  try{
+    const user = req.user
+
+      const query = {}
+      query.sort = {'totalApplied':-1}
+      query.limit=5;
+      const result = await JobService.findAllJobService(query)
+      return res.status(200).json({
+          status: "success",
+          result: result
+        })
+
+  } catch (error) {
+    console.log(error)
+    res.status(400).json({
+      status: "fail",
+      error: "Couldn't find all job"
+    })
+  }
+}

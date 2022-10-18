@@ -24,7 +24,13 @@ exports.createCandidate = async (req, res, next) => {
   exports.findAllCandidatetService = async (req, res, next) => {
     try {
   
-      const result = await candidateService.findAllCandidatetService(req.body);
+      const query = {}
+      const {id:_id} = req.params
+      if(_id){
+        query.data = {_id}
+      }
+
+      const result = await candidateService.findAllCandidatetService(query);
   
       res.status(200).json({
         status: "success",

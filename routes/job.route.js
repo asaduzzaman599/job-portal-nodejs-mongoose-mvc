@@ -5,6 +5,8 @@ const { verifyToken } = require('../middleware/verifyToken');
 const router = express.Router()
 
 router.route('/').get(jobController.findAllJob).post(verifyToken,jobController.createJob)
+router.get('/highest-paid-jobs',jobController.highestPaidJobs)
+router.get('/highest-applied-jobs',jobController.highestAppliedJobs)
 router.post('/:id/apply',uploader.single("pdf"), jobController.applyJob)
 router.route('/:id').get(jobController.findOneJob).patch(jobController.updateJob)
 
