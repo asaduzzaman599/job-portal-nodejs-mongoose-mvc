@@ -12,10 +12,11 @@ exports.findAllJob = async (req, res, next) => {
       queryString = queryString.replace(/\b(gt|gte|lt|lte)\b/g, match => `$${match}`)
 
       query.data = JSON.parse(queryString)
-      
-      console.log(  query.data)
-      console.log(query)
-        const result = await JobService.findAllJobService(query)
+      query.select = {
+        candidates:0,
+        appliedInfo:0
+      }
+        const result= await JobService.findAllJobService(query)
         return res.status(200).json({
             status: "success",
             result: result
@@ -35,7 +36,10 @@ exports.findOneJob = async (req, res, next) => {
         const {id:_id} = req.params
         const query={}
         query.data = {_id}
-        
+        query.select = {
+          candidates:0,
+          appliedInfo:0
+        }
         const result = await JobService.findOneJobService(query)
         return res.status(200).json({
             status: "success",
@@ -53,7 +57,7 @@ exports.findOneJob = async (req, res, next) => {
 
 exports.createJob = async (req, res, next) => {
     try {
-      const deadline = new Date(new Date().setDate(new Date().getDate()+7))
+      const deadline = new Date(new Date().setDate((new Date().getDate()+Math.round(Math.random()*10))%30))
 
       if(req.user){
         req.body.manager = {...req.user, id:req.user._id}
@@ -109,24 +113,31 @@ exports.applyJob = async (req, res, next) => {
     const candidate = await candidateService.findOneCandidatetService({data:{'user.id':_id}})
 
     const query = {}
-    const jobId = {id: req.params.id}
+    const jobId =  req.params.id
     console.log('candidate', candidate)
     console.log( candidate._id)
     const candidateId  = candidate._id
 
     console.log()
     const queryJob = {jobId,candidateId}
-    queryJob.data = {_id: jobId.id}
+    queryJob.data = {_id: jobId}
     const jobData = await JobService.findOneJobService(queryJob)
-
-    if(!jobData.deadline > new Date()){
+     if(!jobData){
       return res.status(400).json({
-        status: "fail",
+        status: "failed",
+        error: "no job exist to apply"
+      })
+     }
+
+    if(!jobData?.deadline >= new Date()){
+      return res.status(400).json({
+        status: "failed",
         error: "Deadline not exist to applied the job"
       })
     }
+
     const queryAppliedJob={}
-    queryAppliedJob.data = ({'candidate':candidateId,'job':jobId.id})
+    queryAppliedJob.data = ({'candidate':candidateId,'job':jobId})
     const appliedJobInfoExist =await JobService.findOneAppliedJobInfoService(queryAppliedJob)
     console.log(appliedJobInfoExist)
     if(appliedJobInfoExist){

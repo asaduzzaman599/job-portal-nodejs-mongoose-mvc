@@ -79,7 +79,7 @@ exports.getAuth = async (req, res) => {
         const {email} = req.user
         console.log(email)
       const data = await userService.findOneUserService({email});
-        const { password, ...user } = data.toObject()
+        const  user  = data
 
       res.status(200).json({
         status: "success",

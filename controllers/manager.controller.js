@@ -89,14 +89,18 @@ exports.findManagersAllJob = async (req, res, next) => {
   
 exports.findManagersOneJob = async (req, res, next) => {
     try {
-      const {_id} = req.user
+
+      const {id:_id} = req.params
       const query = {}
-      if(_id){
-        query.data = {"manager.id":_id}
+      
+      const user = req.user
+      if(_id && user){
+        query.data = {_id}
+        //query.data = {'manager.id': user._id}
+        console.log('job data',query)
       }
       query.populate = 'candidates'
-
-      const result = await jobService.findOneJobService((query));
+      const result = await jobService.findOneJobService(query);
         
       res.status(200).json({
         status: "success",
