@@ -17,9 +17,9 @@ exports.appliedJobInfoService = async (data) => {
   
      const jobdata = await Job.updateOne(
       {_id:job},
-      {$push : {appliedInfo: {id:appliedInfoId, candidateId:candidate},
-      candidates:candidate},
-      $inc:{totalApplied:1}}
+      {
+        $inc:{totalApplied:1}, $push : {appliedInfo: {id:appliedInfoId, candidateId:candidate},
+      }, $push:{candidates:candidate},}
       )
       
       console.log('job data',jobdata)
@@ -34,14 +34,14 @@ exports.appliedJobInfoService = async (data) => {
   }
   
 exports.findAllJobService = async (query) => {
-    const result = await Job.find({...query?.data}).sort(query?.sort).limit(query?.limit);
+    const result = await Job.find({...query?.data}).sort(query?.sort).limit(query?.limit).populate('candidates');
     return result;
   }
 
   
 exports.findOneJobService = async (query) => {
   console.log("data",query?.data)
-    const result = await Job.find({ ...query?.data }).populate('candidates')
+    const result = await Job.findOne({ ...query?.data }).populate('candidates')
     return result;
   }
   

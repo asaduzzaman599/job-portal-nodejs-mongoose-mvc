@@ -1,9 +1,11 @@
 const managerService  = require("../services/manager.service");
 const jobService  = require("../services/job.service");
+const userService  = require("../services/user.service");
 
 exports.createManager = async (req, res, next) => {
     try {
-      const result = await managerService.createManagertService(req.body);
+      console.log('manager')
+      const result = await userService.createUserService({...req.body,role:'manager'});
   
       res.status(200).json({
         status: "success",
@@ -28,7 +30,7 @@ exports.findoneManager = async (req, res, next) => {
         if(_id){
           query.data = {_id}
         }
-      const result = await managerService.findOneManagerService(query);
+      const result = await userService.findOneUserService({...query});
         
       res.status(200).json({
         status: "success",
@@ -47,7 +49,7 @@ exports.findoneManager = async (req, res, next) => {
   
 exports.findAllManager = async (req, res, next) => {
     try {
-      const result = await managerService.findAllManagerService();
+      const result = await userService.findManyUserService({role:'manager'});
         
       res.status(200).json({
         status: "success",

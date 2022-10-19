@@ -24,7 +24,7 @@ exports.signupUser = async (req, res, next) => {
         console.log(error)
         res.status(400).json({
           status: "fail",
-          error: "Couldn't create the manager"
+          error: "Couldn't create the user"
         })
       }
 }
@@ -38,7 +38,7 @@ exports.loginUser = async (req, res, next) => {
                 error: "Please provide valid Email and Password"
               })
         }
-        const user = await userService.findOneUserService({email});
+        const user = await userService.userLoginService({email});
     
         const {password:userPassword , ...data} = user.toObject()
         

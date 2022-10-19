@@ -17,7 +17,7 @@ exports.createManagertService = async (data) => {
 
   
   exports.findAllManagerService = async (query) => {
-    const manager = await User.find({role:'manager',...query?.data});
+    const manager = await User.find({role:'manager',...query?.data}).select({password:0});
    
 
     return manager;

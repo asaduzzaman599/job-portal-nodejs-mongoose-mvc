@@ -1,12 +1,21 @@
 const candidatetService  = require("../services/candidate.service");
 const JobService  = require("../services/job.service");
+const candidateService  = require("../services/candidate.service");
 const {ObjectId } = require('mongodb')
 
 exports.findAllJob = async (req, res, next) => {
     try{
       const user = req.user
+      const query = {}
 
-        const result = await JobService.findAllJobService()
+      let queryString = JSON.stringify(req.query)
+      queryString = queryString.replace(/\b(gt|gte|lt|lte)\b/g, match => `$${match}`)
+
+      query.data = JSON.parse(queryString)
+      
+      console.log(  query.data)
+      console.log(query)
+        const result = await JobService.findAllJobService(query)
         return res.status(200).json({
             status: "success",
             result: result
@@ -95,9 +104,15 @@ exports.updateJob = async (req, res, next) => {
   
 exports.applyJob = async (req, res, next) => {
   try {
+    
+    const {_id} = req.user
+    const candidate = await candidateService.findOneCandidatetService({data:{'user.id':_id}})
+
     const query = {}
     const jobId = {id: req.params.id}
-    const {candidateId } = req.body
+    console.log('candidate', candidate)
+    console.log( candidate._id)
+    const candidateId  = candidate._id
 
     console.log()
     const queryJob = {jobId,candidateId}
