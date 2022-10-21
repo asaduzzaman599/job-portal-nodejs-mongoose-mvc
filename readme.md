@@ -8,27 +8,27 @@ Admin
 
 
 ## Hiring Manager routes (authorization required)
-POST /jobs 				Create A Job need token from login
+<b>POST /jobs</b> 				Create A Job need token from login
 
-GET /manager/jobs 			Get all jobs of this hiring manager
+<b>GET /manager/jobs</b> 			Get all jobs of this hiring manager
 > Verify the token and get the manager id from there to load manager specific jobs
 
-GET /manager/jobs/:id 		Get a job details by id with applied candidates information and resume if any
+<b>GET /manager/jobs/:id</b> 		Get a job details by id with applied candidates information and resume if any
 
 > Authorize the route to check if this job is created by the hiring manager who is trying to see the job details 
 
-PATCH /jobs/:id 	for Update a job
+<b>PATCH /jobs/:id</b> 	for Update a job
 
 
 ## Candidate routes
 
-GET /jobs Get all Jobs 
+<b>GET /jobs</b> Get all Jobs 
 > filter jobs by location, job type, salary range
 > able to sort jobs
 
-GET /jobs/:id	Get job details with hiring manager info
+<b>GET /jobs/:id</b>	Get job details with hiring manager info
 
-POST /jobs/:id/apply	Apply for a job
+<b>POST /jobs/:id/apply</b>	Apply for a job
 > Prevent apply after deadline
 > If already applied, then can’t apply again
 > Can upload a resume(pdf)(BONUS)
@@ -36,29 +36,27 @@ POST /jobs/:id/apply	Apply for a job
 
 
 ## Auth routes
-POST /user/signup			Signup/Register
-POST /user/login			Login
+<b>POST /user/signup</b>			Signup/Register
+<b>POST /user/login</b>			Login
 > Generate and send a token as response
 
-GET /user/me				Get user information by token
+<b>GET /user/me</b>				Get user information by token
 ### Need user authorization token
 
 
 
 ## Admin routes (Need Tokan)
-GET Admin/candidates Get All candidates
-GET Admin/candidates/:candidateId Get candidate details by id (with applied jobs)
-GET Admin/managers   Get All hiring managers
-Patch Admin/make-managers/:managerId     Update user role to hiring manager
+<b>GET Admin/candidates</b> Get All candidates
+<b>GET Admin/candidates/:candidateId</b> Get candidate details by id (with applied jobs)
+<b>GET Admin/managers</b>   Get All hiring managers
+<b>Patch Admin/make-managers/:managerId</b>     Update user role to hiring manager
 
 ## More optional routes
-Get /Jobs/highest-paid-jobs     Top 10 highest paid jobs
-Get /jobs/highest-applied-jobs  Top 5 most applied jobs
+<b>Get /Jobs/highest-paid-jobs</b>     Top 10 highest paid jobs
+<b>Get /jobs/highest-applied-jobs</b>  Top 5 most applied jobs
 
 
 
-
-MUST DOs
-Must Create an advisor account with this credentials:
+advisor account with this credentials:
 Email: admin@gmail.com
 Password: Admin123#
