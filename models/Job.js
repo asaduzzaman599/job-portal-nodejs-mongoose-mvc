@@ -5,38 +5,38 @@ const { ObjectId } = mongoose.Schema.Types;
 const jobSchema = mongoose.Schema({
 
     manager: {
-        name: {
-          type: String,
-          trim: true,
-          // required: true,
-        },
-        id: {
           type: ObjectId,
-          // required: true,
           ref:"User"
-        }
       },
   name: {
     type: String,
     trim: true,
-    required: [true, "Please provide a brnad name"],
+    required: [true, "Please provide a job title"],
     maxLength: 100,
     unique: true,
     lowercase: true,
   },
+  experience:{
+    type:String
+  },
+  location:{
+    type:String,
+    required: [true, "Please provide a job location"],
+  },
   description: String,
   jobType:{
-    enum:['Full Time', 'Part Time'],
-    default:'Full Time',
+    enum:['full time', 'part time', 'intern', 'contractual'],
+    default:'full time',
     type:String
   },
   salary: {
     type: Number,
-    required: true,
+    required: [true, "Please provide salary"],
     min: [0, "Remuneration can't be negative"]
   },
   totalApplied: {
     type: Number,
+    default:0,
     min: [0, "Total applied job can't be negative"]
   },
  

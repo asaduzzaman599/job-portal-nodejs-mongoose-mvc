@@ -29,13 +29,13 @@ exports.makeAdmin = async (req, res, next) => {
          if(result.modifiedCount){
             return res.status(200).json({
                 status: "success",
-                error: "User role change to manager"
+                error: "User role changed to manager"
               })
          }
       } catch (error) {
         console.log(error)
         res.status(400).json({
-          status: "fail",
+          status: "failed",
           error: "Couldn't create the user"
         })
       }

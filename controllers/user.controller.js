@@ -23,7 +23,7 @@ exports.signupUser = async (req, res, next) => {
       } catch (error) {
         console.log(error)
         res.status(400).json({
-          status: "fail",
+          status: "failed",
           error: "Couldn't create the user"
         })
       }
@@ -34,7 +34,7 @@ exports.loginUser = async (req, res, next) => {
         const {email, password} = req.body
         if(!email || !password ){
             return res.status(400).json({
-                status: "fail",
+                status: "failed",
                 error: "Please provide valid Email and Password"
               })
         }
@@ -44,7 +44,7 @@ exports.loginUser = async (req, res, next) => {
         
         if(!user){
             return res.status(400).json({
-                status: "fail",
+                status: "failed",
                 error: "No User Found"
               })
         }
@@ -53,7 +53,7 @@ exports.loginUser = async (req, res, next) => {
 
         if(!isPasswordValid){
             return res.status(400).json({
-                status: "fail",
+                status: "failed",
                 error: "Wrong Email or Password!"
               })
         }
@@ -68,7 +68,7 @@ exports.loginUser = async (req, res, next) => {
       } catch (error) {
         console.log(error)
         res.status(400).json({
-          status: "fail",
+          status: "failed",
           error: "Couldn't login user"
         })
       }
@@ -78,17 +78,16 @@ exports.getAuth = async (req, res) => {
     try {
         const {email} = req.user
         console.log(email)
-      const data = await userService.findOneUserService({email});
-        const  user  = data
+        const user = await userService.findOneUserService({email});
 
       res.status(200).json({
         status: "success",
         result: user
     })
     } catch (error) {
-        console.log(error)
+        
       res.status(500).json({
-        status: "fail",
+        status: "failed",
         error,
       });
     }

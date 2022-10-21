@@ -5,12 +5,15 @@ const authorization = require('../utils/authorization');
 
 const router = express.Router();
 
-router.route('/').get(managerController.findAllManager).post(managerController.createManager)
+router.route('/').get(managerController.findAllManager)
 
+router.get('/jobs', verifyToken ,
+        authorization('manager'),
+        managerController.findManagersAllJob)
 
-
-router.get('/jobs', verifyToken ,authorization('manager'), managerController.findManagersAllJob)
-router.get('/jobs/:id', verifyToken ,authorization('manager'), managerController.findManagersOneJob)
+router.get('/jobs/:id',
+        verifyToken ,authorization('manager'), 
+        managerController.findManagersOneJob)
 
 router.route('/:id').get(managerController.findoneManager)
 

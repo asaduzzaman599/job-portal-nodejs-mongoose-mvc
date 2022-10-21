@@ -1,8 +1,7 @@
-const managerService  = require("../services/manager.service");
 const jobService  = require("../services/job.service");
 const userService  = require("../services/user.service");
 
-exports.createManager = async (req, res, next) => {
+/* exports.createManager = async (req, res, next) => {
     try {
       console.log('manager')
       const result = await userService.createUserService({...req.body,role:'manager'});
@@ -15,11 +14,11 @@ exports.createManager = async (req, res, next) => {
     } catch (error) {
       console.log(error)
       res.status(400).json({
-        status: "fail",
+        status: "failed",
         error: "Couldn't create the manager"
       })
     }
-  }
+  } */
 
   
 exports.findoneManager = async (req, res, next) => {
@@ -39,7 +38,7 @@ exports.findoneManager = async (req, res, next) => {
     } catch (error) {
       console.log(error)
       res.status(400).json({
-        status: "fail",
+        status: "failed",
         error: "Couldn't find the manager"
       })
     }
@@ -58,7 +57,7 @@ exports.findAllManager = async (req, res, next) => {
     } catch (error) {
       console.log(error)
       res.status(400).json({
-        status: "fail",
+        status: "failed",
         error: "Couldn't find the manager"
       })
     }
@@ -72,7 +71,8 @@ exports.findManagersAllJob = async (req, res, next) => {
         query.data = {"manager.id":_id}
       }
 
-      const result = await jobService.findAllJobService((query));
+      const result = await jobService
+                          .findAllJobService((query));
         
       res.status(200).json({
         status: "success",
@@ -81,7 +81,7 @@ exports.findManagersAllJob = async (req, res, next) => {
     } catch (error) {
       console.log(error)
       res.status(400).json({
-        status: "fail",
+        status: "failed",
         error: "Couldn't find manager's job"
       })
     }
@@ -95,8 +95,16 @@ exports.findManagersOneJob = async (req, res, next) => {
       
       const user = req.user
       if(_id && user){
-        query.data = {_id}
-        //query.data = {'manager.id': user._id}
+        query.data = {
+          '$and':[
+              {
+                _id:_id
+              }, {
+                'manager.id': user._id
+              }
+            ]
+          }
+        
         console.log('job data',query)
       }
       query.populate = 'candidates'
@@ -109,7 +117,7 @@ exports.findManagersOneJob = async (req, res, next) => {
     } catch (error) {
       console.log(error)
       res.status(400).json({
-        status: "fail",
+        status: "failed",
         error: "Couldn't find manager's job"
       })
     }

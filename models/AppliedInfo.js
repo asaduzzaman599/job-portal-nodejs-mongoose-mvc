@@ -14,6 +14,9 @@ const appliedJobSchema = mongoose.Schema({
     type: String,
     // required: true,
   },
+  resumeURL:{
+    type:String
+  },
   job: {
     
       type: ObjectId,

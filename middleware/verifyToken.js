@@ -7,7 +7,7 @@ exports.verifyToken = async  (req,res,next) =>{
         console.log(req.headers)
         if(!authorization){
             return res.status(401).json({
-                status: "fail",
+                status: "failed",
                 error: "You are not logged in"
                 });
         }
@@ -19,7 +19,7 @@ exports.verifyToken = async  (req,res,next) =>{
         next()
     }catch(error){
         res.status(401).json({
-            status: "fail",
+            status: "failed",
             error: "Invalid Token!"
             });
     }

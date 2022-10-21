@@ -34,15 +34,22 @@ exports.appliedJobInfoService = async (data) => {
   }
   
 exports.findAllJobService = async (query) => {
-  console.log('select',query)
-    const result = await Job.find({...query?.data}).select({...query?.select}).sort(query?.sort).limit(query?.limit).populate(query.populate);
+  console.log('select',query.sort)
+    const result = await Job.find({...query?.data})
+                          .select({...query?.select})
+                          .sort(query.sort)
+                          .limit(query?.limit)
+                          .populate(query.populate);
     return result;
   }
 
   
 exports.findOneJobService = async (query) => {
   console.log("data",query?.data)
-    const result = await Job.findOne({ ...query?.data }).select({...query.select}).populate(query.populate)
+    const result = await Job
+                        .findOne({ ...query?.data })
+                        .select({...query.select})
+                        .populate(query.populate)
     return result;
   }
   

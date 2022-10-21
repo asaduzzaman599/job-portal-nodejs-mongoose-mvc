@@ -1,14 +1,16 @@
 const User = require("../models/User");
 
 exports.createUserService = async (data) => {
-    const user = await User.create(data);
-   
+    const userData = await User.create(data);
+    const {password, ...user} = userData.toObject();
     return user;
   };
 
   exports.findOneUserService = async (data) => {
     console.log({data})
-    const user = await User.findOne({...data}).select({password:0});   
+    const user = await User
+                      .findOne({...data})
+                      .select({password:0});   
 
     return user.toObject();
   };
@@ -28,8 +30,8 @@ exports.createUserService = async (data) => {
 
   exports.updateUserService = async (_id,data) =>  {  
   const user = await User.updateOne(
-    {_id},
-    {...data},
-    {runValidators: true});
+                                    {_id},
+                                    {...data},
+                                    {runValidators: true});
   return user;
 }

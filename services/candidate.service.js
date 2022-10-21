@@ -9,7 +9,9 @@ exports.createCandidatetService = async (data) => {
   };
 
 exports.findAllCandidatetService = async (query) => {
-    const candidate = await Candidate.find({...query?.data}).populate('appliedInfo');
+    const candidate = await Candidate.find({...query?.data})
+                      .select(query.select)
+                      .populate('appliedInfo jobs');
    
 
     return candidate;
