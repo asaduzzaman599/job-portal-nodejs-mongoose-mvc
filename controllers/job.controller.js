@@ -107,7 +107,8 @@ exports.updateJob = async (req, res, next) => {
   
       res.status(200).json({
         status: "success",
-        message: "Successfully updated the job"
+        message: "Successfully updated the job",
+        result:result
       });
     } catch (error) {
       console.log(error);
