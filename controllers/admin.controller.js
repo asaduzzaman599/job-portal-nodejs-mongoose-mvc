@@ -33,7 +33,6 @@ exports.makeAdmin = async (req, res, next) => {
               })
          }
       } catch (error) {
-        console.log(error)
         res.status(400).json({
           status: "failed",
           error: "Couldn't create the user"

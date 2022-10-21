@@ -77,9 +77,8 @@ exports.loginUser = async (req, res, next) => {
 exports.getAuth = async (req, res) => {
     try {
         const {email} = req.user
-        console.log(email)
         const user = await userService.findOneUserService({email});
-
+        
       res.status(200).json({
         status: "success",
         result: user

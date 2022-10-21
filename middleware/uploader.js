@@ -18,7 +18,6 @@ const uploader = multer({
     const extension = await path.extname(file.originalname);
     if(file.originalname){
       req.body.resumeId = fileUpdateName
-      console.log('namefile',file.originalname,file.filename)
     }
     if(supportedImage.test(extension)){
       cb(null, true);

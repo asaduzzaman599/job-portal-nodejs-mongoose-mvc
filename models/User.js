@@ -40,13 +40,11 @@ const userSchema = mongoose.Schema(
         message: "Passwords don't match!",
       },
     },
-
     role: {
       type: String,
       enum: ["manager", "candidate", "admin"],
       default: "candidate",
     },
-
     firstName: {
       type: String,
       required: [true, "Please provide a first name"],

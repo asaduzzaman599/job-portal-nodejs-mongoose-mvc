@@ -10,10 +10,7 @@ exports.createJobService = async (data) => {
 exports.appliedJobInfoService = async (data) => {
     const result = await AppliedInfo.create({...data});
 
-    console.log(data)
     const {_id:appliedInfoId,job,candidate}= result;
-  
-    console.log('job can',job,candidate)
   
      const jobdata = await Job.updateOne(
       {_id:job},
@@ -22,19 +19,16 @@ exports.appliedJobInfoService = async (data) => {
       }, $push:{candidates:candidate},}
       )
       
-      console.log('job data',jobdata)
      const candidateData = await Candidate.updateOne(
       {_id:candidate},
       {$push : {appliedInfo: appliedInfoId,
       jobs:job}}
       )
       
-      console.log('candidate data',candidateData)
     return result;
   }
   
 exports.findAllJobService = async (query) => {
-  console.log('select',query.sort)
     const result = await Job.find({...query?.data})
                           .select({...query?.select})
                           .sort(query.sort)
@@ -45,7 +39,6 @@ exports.findAllJobService = async (query) => {
 
   
 exports.findOneJobService = async (query) => {
-  console.log("data",query?.data)
     const result = await Job
                         .findOne({ ...query?.data })
                         .select({...query.select})

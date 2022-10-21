@@ -7,7 +7,6 @@ exports.createUserService = async (data) => {
   };
 
   exports.findOneUserService = async (data) => {
-    console.log({data})
     const user = await User
                       .findOne({...data})
                       .select({password:0});   
@@ -15,7 +14,6 @@ exports.createUserService = async (data) => {
     return user.toObject();
   };
   exports.userLoginService = async (data) => {
-    console.log({data})
     const user = await User.findOne({...data});   
 
     return user;

@@ -1,26 +1,7 @@
 const jobService  = require("../services/job.service");
 const userService  = require("../services/user.service");
 
-/* exports.createManager = async (req, res, next) => {
-    try {
-      console.log('manager')
-      const result = await userService.createUserService({...req.body,role:'manager'});
-  
-      res.status(200).json({
-        status: "success",
-        message: "Successfully created the manager",
-        result: result
-      })
-    } catch (error) {
-      console.log(error)
-      res.status(400).json({
-        status: "failed",
-        error: "Couldn't create the manager"
-      })
-    }
-  } */
 
-  
 exports.findoneManager = async (req, res, next) => {
     try {
         const {id:_id} = req.params
@@ -89,10 +70,8 @@ exports.findManagersAllJob = async (req, res, next) => {
   
 exports.findManagersOneJob = async (req, res, next) => {
     try {
-
       const {id:_id} = req.params
       const query = {}
-      
       const user = req.user
       if(_id && user){
         query.data = {
@@ -104,8 +83,6 @@ exports.findManagersOneJob = async (req, res, next) => {
               }
             ]
           }
-        
-        console.log('job data',query)
       }
       query.populate = 'candidates'
       const result = await jobService.findOneJobService(query);

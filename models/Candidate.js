@@ -3,7 +3,6 @@ const valid = require("validator");
 const { ObjectId } = mongoose.Schema.Types;
 
 const candidateSchema = mongoose.Schema({
-
   name: {
     type: String,
     trim: true,
@@ -19,24 +18,18 @@ const candidateSchema = mongoose.Schema({
     }
   },
   appliedInfo: [{
-    
       type: ObjectId,
       ref: "AppliedInfo"
-  }]
-  ,
-  
+  }],
   jobs: [{
-    
       type: ObjectId,
       ref: "Job"
-    
   }],
   status: {
     type: String,
     enum: ["active", "inactive"],
     default: "active"
   }
-
 }, {
   timestamps: true
 });

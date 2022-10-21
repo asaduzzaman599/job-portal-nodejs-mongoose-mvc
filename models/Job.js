@@ -3,7 +3,6 @@ const validator = require("validator");
 const { ObjectId } = mongoose.Schema.Types;
 
 const jobSchema = mongoose.Schema({
-
     manager: {
           type: ObjectId,
           ref:"User"
@@ -39,7 +38,6 @@ const jobSchema = mongoose.Schema({
     default:0,
     min: [0, "Total applied job can't be negative"]
   },
- 
   appliedInfo: [{
     candidateId:  {
       type: ObjectId,
@@ -55,19 +53,14 @@ const jobSchema = mongoose.Schema({
     required:true
   },
   candidates: [{
-    // name: String,
-    // contanctNumber: String,
-    
       type: ObjectId,
       ref: "Candidate"
-    
   }],
   status: {
     type: String,
     enum: ["active", "inactive"],
     default: "active"
   }
-
 }, {
   timestamps: true
 });

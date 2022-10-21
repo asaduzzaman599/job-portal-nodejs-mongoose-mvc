@@ -53,7 +53,6 @@ exports.findOneJob = async (req, res, next) => {
           })
 
     } catch (error) {
-      console.log(error)
       res.status(400).json({
         status: "failed",
         error: "Couldn't find a job"
@@ -72,7 +71,6 @@ exports.createJob = async (req, res, next) => {
       if(req.user){
         req.body.manager = req.user._id
       }
-      console.log(req.user)
       const result = await JobService
                             .createJobService({
                               ...req.body,
@@ -100,7 +98,6 @@ exports.updateJob = async (req, res, next) => {
     const { id:_id } = req.params;
     try {
       const result = await JobService.updateJobService(_id, req.body);
-        console.log(result)
       if (!result.modifiedCount) {
         return res.status(400).json({
           status: "failed",
@@ -132,14 +129,10 @@ exports.applyJob = async (req, res, next) => {
                                                         'user.id':_id
                                                          }
                                                     })
-console.log('user',req.user)
     const query = {}
     const jobId =  req.params.id
-    console.log('candidate', candidate)
-    console.log( candidate._id)
     const candidateId  = candidate._id
 
-    console.log()
     const queryJob = {}
     queryJob.data = {_id: jobId}
     const jobData = await JobService.findOneJobService(queryJob)
@@ -161,7 +154,6 @@ console.log('user',req.user)
     const queryAppliedJob={}
     queryAppliedJob.data = ({'candidate':candidateId,'job':jobId})
     const appliedJobInfoExist =await JobService.findOneAppliedJobInfoService(queryAppliedJob)
-    console.log(appliedJobInfoExist)
 
     if(appliedJobInfoExist){
       return res.status(400).json({
@@ -170,8 +162,6 @@ console.log('user',req.user)
       })
     }
 
-    console.log(candidateId,req.params.id)
-    console.log(req.host)
     const {resumeId} = req.body
       const result =  await JobService.appliedJobInfoService({
                                                               resumeId,
